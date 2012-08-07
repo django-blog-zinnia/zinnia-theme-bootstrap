@@ -1,0 +1,18 @@
+{% load i18n %}
+<ul class="nav nav-tabs nav-stacked">
+  {% for comment in comments %}
+  <li>
+    {% with entry=comment.content_object %}
+    <a href="{{ entry.get_absolute_url }}#comment_{{ comment.pk }}"
+       title="{% trans "Comment on" %} {{ entry.title }}">
+      {{ comment.user_name }} {% trans "in" %}
+      {{ entry.title }}
+    </a>
+    {% endwith %}
+  </li>
+  {% empty %}
+  <li>
+    <a href="#">{% trans "No comments yet." %}</a>
+  </li>
+  {% endfor %}
+</ul>
