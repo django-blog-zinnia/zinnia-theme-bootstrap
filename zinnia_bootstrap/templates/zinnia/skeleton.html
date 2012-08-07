@@ -36,24 +36,28 @@
     <header class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
+          <img src="{{ STATIC_URL }}zinnia_bootstrap/img/zinnia.png" class="pull-left" />
           <a href="{% url 'zinnia_entry_archive_index' %}" title="Zinnia's Blog" class="brand" rel="home">
             Zinnia's Blog
           </a>
           <ul class="nav pull-left">
-            <li>
-              <a href="{% url 'zinnia_category_list' %}" title="{% trans "Category list" %}">
+            {% url 'zinnia_category_list' as category_list_url %}
+            <li {% if category_list_url in request.path %}class="active"{% endif %}>
+              <a href="{{ category_list_url }}" title="{% trans "Category list" %}">
                 {% trans "Categories" %}
               </a>
             </li>
             <li class="divider-vertical"></li>
-            <li>
-              <a href="{% url 'zinnia_author_list' %}" title="{% trans "Author list" %}">
+            {% url 'zinnia_author_list' as author_list_url %}
+            <li {% if author_list_url in request.path %}class="active"{% endif %}>
+              <a href="{{ author_list_url }}" title="{% trans "Author list" %}">
                 {% trans "Authors" %}
               </a>
             </li>
             <li class="divider-vertical"></li>
-            <li>
-              <a href="{% url 'zinnia_tag_list' %}" title="{% trans "Tag list" %}">
+            {% url 'zinnia_tag_list' as tag_list_url %}
+            <li {% if tag_list_url in request.path %}class="active"{% endif %}>
+              <a href="{{ tag_list_url }}" title="{% trans "Tag list" %}">
                 {% trans "Tags" %}
               </a>
             </li>
@@ -62,8 +66,10 @@
             <input type="text" class="search-query" placeholder="search" name="pattern" />
           </form>
           <ul class="nav pull-right">
+            {% url 'zinnia_sitemap' as sitemap_url %}
+            <li {% if sitemap in request.path %}class="active"{% endif %}>
             <li>
-              <a href="{% url 'zinnia_sitemap' %}" title="{% trans "Sitemap" %}" class="sitemap">
+              <a href="{{ sitemap_url }}" title="{% trans "Sitemap" %}" class="sitemap">
                 {% trans "Sitemap" %}
               </a>
             </li>
