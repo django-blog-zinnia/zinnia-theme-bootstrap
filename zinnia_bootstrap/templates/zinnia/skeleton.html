@@ -47,23 +47,22 @@
                 {% trans "Categories" %}
               </a>
             </li>
-            <li class="divider-vertical"></li>
             {% url 'zinnia_author_list' as author_list_url %}
             <li {% if author_list_url in request.path %}class="active"{% endif %}>
               <a href="{{ author_list_url }}" title="{% trans "Author list" %}">
                 {% trans "Authors" %}
               </a>
             </li>
-            <li class="divider-vertical"></li>
             {% url 'zinnia_tag_list' as tag_list_url %}
             <li {% if tag_list_url in request.path %}class="active"{% endif %}>
               <a href="{{ tag_list_url }}" title="{% trans "Tag list" %}">
                 {% trans "Tags" %}
               </a>
             </li>
+            <li class="divider-vertical"></li>
           </ul>
           <form method="get" action="{% url 'zinnia_entry_search' %}" class="navbar-search pull-left">
-            <input type="text" class="search-query" placeholder="search" name="pattern" />
+            <input type="text" class="search-query" placeholder="search" name="pattern" value="{{ pattern }}" />
           </form>
           <ul class="nav pull-right">
             {% url 'zinnia_sitemap' as sitemap_url %}
