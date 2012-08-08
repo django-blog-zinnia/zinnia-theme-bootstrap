@@ -62,7 +62,7 @@
             <li class="divider-vertical"></li>
           </ul>
           <form method="get" action="{% url 'zinnia_entry_search' %}" class="navbar-search pull-left">
-            <input type="text" class="search-query" placeholder="search" name="pattern" value="{{ pattern }}" />
+            <input type="text" class="search-query" placeholder="{% trans 'Search' %}" name="pattern" value="{{ pattern }}" />
           </form>
           <ul class="nav pull-right">
             {% url 'zinnia_sitemap' as sitemap_url %}
