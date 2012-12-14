@@ -1,19 +1,26 @@
 {% load comments i18n %}
 {% load url from future %}
-<form action="{% comment_form_target %}" method="post" class="well">
+<form action="{% comment_form_target %}" method="post" id="comment-form" class="well">
   {% csrf_token %}
   <fieldset>
     <legend>{% trans "Post your comment" %}</legend>
-    <input type="hidden" name="next" value="{% url 'zinnia_discussion_success' %}"/>
+    <input type="hidden" name="next" value="{% url 'zinnia_comment_success' %}"/>
     {% for field in form %}
     {% if field.is_hidden %}{{ field }}{% else %}
+    {% if user.is_authenticated and field.name in "namemailurl" %}{% else %}
     <div{% if field.errors %} class="alert alert-error"{% endif %}{% ifequal field.name "honeypot" %} style="display:none;"{% endifequal %}>
       {{ field.label_tag }}
       {% if field.errors %}{{ field.errors }}{% endif %}
       {{ field }}
     </div>
     {% endif %}
+    {% endif %}
     {% endfor %}
+    {% if user.is_authenticated %}
+    <p class="auth">
+      {% trans "Comment as" %} <strong>{% firstof user.get_full_name user.username %}</strong>. <a href="{% url 'admin:logout' %}">{% trans "Log out" %}</a>.
+    </p>
+    {% endif %}
     <p class="submit">
       <input type="submit" name="preview" class="submit-preview btn" value="{% trans "Preview" %}" />
       <input type="submit" name="submit" class="submit-post btn btn-primary" value="{% trans "Post" %}" />

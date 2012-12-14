@@ -1,4 +1,4 @@
-{% load tagging_tags comments i18n %}
+{% load comments i18n %}
 {% load url from future %}
 <article id="entry-{{ object.pk }}" class="hentry{% if object.featured %} featured{% endif %}">
   <header class="entry-header">
@@ -8,11 +8,12 @@
       </a>
     </h2>
     <p class="entry-info">
-      {% if object.authors.count %}
+      {% with authors=object.authors.all %}
+      {% if authors|length %}
       {% trans "Written by" %}
-      {% for author in object.authors.all %}
+      {% for author in authors %}
       <span class="vcard author">
-        <a href="{% url 'zinnia_author_detail' author.username %}" class="fn nickname url" rel="author"
+        <a href="{{ author.get_absolute_url }}" class="fn nickname url" rel="author"
            title="{% blocktrans %}Show all {{ author }}'s entries{% endblocktrans %}">{{ author }}</a>
       </span>{% if not forloop.last %}, {% endif %}
       {% endfor %}
@@ -20,13 +21,15 @@
       {% else %}
       {% trans "Written on" %}
       {% endif %}
+      {% endwith %}
       <time datetime="{{ object.creation_date|date:"c" }}" pubdate="pubdate">{{ object.creation_date|date:"DATE_FORMAT" }}</time>
-      {% if object.categories.count %}
+      {% with categories=object.categories.all %}
+      {% if categories|length %}
       {% trans "in" %}
-      {% for category in object.categories.all %}
+      {% for category in categories %}
       <a href="{{ category.get_absolute_url }}"
          title="{% blocktrans %}Show all entries in {{ category }}{% endblocktrans %}"
-         rel="tag category">{{ category }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}.
+         rel="tag category">{{ category }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}.{% endwith %}
     </p>
   </header>
 
@@ -61,8 +64,7 @@
   <footer class="entry-footer well">
     <p class="entry-tags">
       <i class="icon-tags"></i> <strong>{% trans "Tags" %}</strong> :
-      {% tags_for_object object as tag_list %}
-      {% for tag in tag_list %}
+      {% for tag in object.tags_list %}
       <a href="{% url 'zinnia_tag_detail' tag %}"
          title="{% blocktrans %}Show all entries tagged by {{ tag }}{% endblocktrans %}"
          rel="tag">{{ tag }}</a>
@@ -75,13 +77,14 @@
       <i class="icon-bookmark"></i> <strong>{% trans "Short url" %}</strong> :
       <a href="{{ object.short_url }}"
          title="{% blocktrans with object=object.title %}Short URL to {{ object }}{% endblocktrans %}"
-         rel="shortlink"> {{ object.short_url }}
+         rel="shortlink">
+        {{ object.short_url }}
       </a>
     </p>
 
     <p class="entry-comments">
       <i class="icon-comment"></i> <strong>{% trans "Discussions" %}</strong> :
-      {% with comment_count=object.comments.count %}
+      {% with comment_count=object.comment_count %}
       {% if comment_count %}
       <a href="{{ object.get_absolute_url }}#comments"
          title="{% blocktrans with object=object.title %}Comments on {{ object }}{% endblocktrans %}">
@@ -90,7 +93,8 @@
       {% else %}
       {% if object.comments_are_open %}
       {% trans "No comments yet." %}
-      <a href="{{ object.get_absolute_url }}#comments" title="{% blocktrans with object=object.title %}Leave a comment on {{ object }}{% endblocktrans %}">
+      <a href="{{ object.get_absolute_url }}#comment-form"
+         title="{% blocktrans with object=object.title %}Leave a comment on {{ object }}{% endblocktrans %}">
         {% trans "Be first to comment!" %}
       </a>
       {% else %}
@@ -98,14 +102,14 @@
       {% endif %}
       {% endif %}
       {% endwith %}
-      {% with pingback_count=object.pingbacks.count %}
+      {% with pingback_count=object.pingback_count %}
       {% if pingback_count %}
       , <a href="{{ object.get_absolute_url }}#pingbacks" title="{% blocktrans with object=object.title %}Pingbacks on {{ object }}{% endblocktrans %}">
         {% blocktrans count pingback_count=pingback_count %}{{ pingback_count }} pingback{% plural %}{{ pingback_count }} pingbacks{% endblocktrans %}
       </a>
       {% endif %}
       {% endwith %}
-      {% with trackback_count=object.trackbacks.count %}
+      {% with trackback_count=object.trackback_count %}
       {% if trackback_count %}
       , <a href="{{ object.get_absolute_url }}#trackbacks" title="{% blocktrans with object=object.title %}Trackbacks on {{ object }}{% endblocktrans %}">
         {% blocktrans count trackback_count=trackback_count %}{{ trackback_count }} trackback{% plural %}{{ trackback_count }} trackbacks{% endblocktrans %}
