@@ -1,23 +1,17 @@
-{% load i18n mptt_tags %}
+{% load i18n %}
 <ul class="category-root nav nav-tabs nav-stacked">
-  {% recursetree categories %}
-  <li>
-    <a href="{{ node.get_absolute_url }}" title="{% blocktrans with category=node %}Show all entries in {{ category }}{% endblocktrans %}">{{ node }}
+  {% for category in categories %}
+  <li{% if category.slug == context_category.slug %} class="current"{% endif %}>
+    <a href="{{ category.get_absolute_url }}"
+       title="{% blocktrans %}Show all entries in {{ category }}{% endblocktrans %}">{{ category }}
       <span class="label label-info">
-        {% blocktrans count entry_count=node.entries_published.count %}{{ entry_count }} entry{% plural %}{{ entry_count }} entries{% endblocktrans %}
+        {% blocktrans count entry_count=category.count_entries_published %}{{ entry_count }} entry{% plural %}{{ entry_count }} entries{% endblocktrans %}
       </span>
     </a>
-
-    {% if not node.is_leaf_node %}
-    <ul class="category-children category-{{ node.slug }}">
-      {{ children }}
-    </ul>
-    {% endif %}
   </li>
-  {% endrecursetree %}
-  {% if not categories %}
+  {% empty %}
   <li>
     <a href="#">{% trans "No categories yet." %}</a>
   </li>
-  {% endif %}
+  {% endfor %}
 </ul>
