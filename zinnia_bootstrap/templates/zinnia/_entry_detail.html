@@ -1,21 +1,24 @@
 {% load comments i18n %}
 {% load url from future %}
 <article id="entry-{{ object.pk }}" class="hentry{% if object.featured %} featured{% endif %}">
+  {% block entry-header %}
   <header class="entry-header">
+    {% block entry-title %}
     <h2 class="entry-title">
       <a href="{{ object.get_absolute_url }}" title="{{ object.title }}" rel="bookmark">
         {{ object.title }}
       </a>
     </h2>
+    {% endblock %}
+    {% block entry-info %}
     <p class="entry-info">
       {% with authors=object.authors.all %}
       {% if authors|length %}
       {% trans "Written by" %}
       {% for author in authors %}
       <span class="vcard author">
-        <a href="{{ author.get_absolute_url }}" class="fn nickname url" rel="author"
-           title="{% blocktrans %}Show all {{ author }}'s entries{% endblocktrans %}">{{ author }}</a>
-      </span>{% if not forloop.last %}, {% endif %}
+        <a href="{{ author.get_absolute_url }}" class="fn url{% if not author.get_full_name %} nickname{% endif %}" rel="author"
+           title="{% blocktrans %}Show all {{ author }}'s entries{% endblocktrans %}">{{ author }}</a></span>{% if not forloop.last %}, {% endif %}
       {% endfor %}
       {% trans "on" %}
       {% else %}
@@ -31,9 +34,13 @@
          title="{% blocktrans %}Show all entries in {{ category }}{% endblocktrans %}"
          rel="tag category">{{ category }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}.{% endwith %}
     </p>
+    {% endblock %}
   </header>
+  {% endblock %}
 
+  {% block entry-body %}
   <div class="entry-body">
+    {% block entry-image %}
     {% if object.image %}
     <div class="entry-image">
       <p>
@@ -47,9 +54,13 @@
       </p>
     </div>
     {% endif %}
+    {% endblock %}
+    {% block entry-content %}
     <div class="entry-content">
       {{ object_content }}
     </div>
+    {% endblock %}
+    {% block continue-reading %}
     {% if continue_reading %}
     <p class="continue-reading">
       <a href="{{ object.get_absolute_url }}"
@@ -59,9 +70,13 @@
       </a>
     </p>
     {% endif %}
+    {% endblock %}
   </div>
+  {% endblock %}
 
+  {% block entry-footer %}
   <footer class="entry-footer well">
+    {% block entry-tags %}
     <p class="entry-tags">
       <i class="icon-tags"></i> <strong>{% trans "Tags" %}</strong> :
       {% for tag in object.tags_list %}
@@ -72,7 +87,8 @@
       <span>{% trans "No tags" %}</span>
       {% endfor %}
     </p>
-
+    {% endblock %}
+    {% block entry-shorturl %}
     <p class="entry-shorturl">
       <i class="icon-bookmark"></i> <strong>{% trans "Short url" %}</strong> :
       <a href="{{ object.short_url }}"
@@ -81,7 +97,8 @@
         {{ object.short_url }}
       </a>
     </p>
-
+    {% endblock %}
+    {% block entry-comments %}
     <p class="entry-comments">
       <i class="icon-comment"></i> <strong>{% trans "Discussions" %}</strong> :
       {% with comment_count=object.comment_count %}
@@ -117,5 +134,7 @@
       {% endif %}
       {% endwith %}
     </p>
+    {% endblock %}
   </footer>
+  {% endblock %}
 </article>

@@ -35,7 +35,7 @@
 {% block content %}
 
 {% block entry-content %}
-  {% include "zinnia/_entry_detail.html" with object_content=object.html_content|safe %}
+  {% include object.content_template with object_content=object.html_content|safe %}
 {% endblock %}
 
 {% block entry-widgets %}
@@ -90,7 +90,7 @@
   {% with comment_list=object.comments %}
   <ol id="comment-list">
     {% for comment in comment_list %}
-    <li id="comment-{{ comment.pk }}-by-{{ comment.user_name }}"
+    <li id="comment-{{ comment.pk }}-by-{{ comment.user_name|slugify }}"
         class="comment vcard {% cycle box1,box2 %}{% if comment.user %} authenticated-comment{% if comment.user.is_staff %} staff-comment{% endif %}{% if comment.user.is_superuser %} superuser-comment{% endif %}{% endif %}">
       <img src="{% get_gravatar comment.email 60 "G" %}"
            class="gravatar photo" alt="{{ comment.name }}" />
@@ -99,13 +99,13 @@
 	<a href="{{ comment.url }}" rel="external nofollow"
            class="fn url">{{ comment.name }}</a>
 	{% else %}
-	{{ comment.name }}
+	<span class="fn">{{ comment.name }}</span>
 	{% endif %}
 	{% trans "on" %}
         <abbr class="comment-published" title="{{ comment.submit_date|date:"c" }}">
           {{ comment.submit_date|date:"SHORT_DATETIME_FORMAT" }}
         </abbr>
-        <a href="#comment-{{ comment.pk }}-by-{{ comment.user_name }}"
+        <a href="#comment-{{ comment.pk }}-by-{{ comment.user_name|slugify }}"
            id="c{{ comment.pk }}" class="anchor-link"
            title="{% trans "Direct link to this comment" %}">#</a>
       </p>
@@ -154,7 +154,7 @@
   </ol>
   {% endwith %}
   {% endif %}
-  {% if object.pingback_enabled %}
+  {% if object.pingbacks_are_open %}
   <p>{% trans "Pingbacks are open." %}</p>
   {% else %}
   <p>{% trans "Pingbacks are closed." %}</p>
@@ -163,7 +163,7 @@
 {% endblock %}
 
 {% block entry-trackbacks %}
-{% if object.trackback_count or object.pingback_enabled %}
+{% if object.trackback_count or object.trackbacks_are_open %}
 <section id="trackbacks">
   <h3>{% trans "Trackbacks" %}</h3>
   {% if object.trackback_count %}
@@ -190,7 +190,7 @@
   </ol>
   {% endwith %}
   {% endif %}
-  {% if object.pingback_enabled %}
+  {% if object.trackbacks_are_open %}
   <p>
     <a href="{% url 'zinnia_entry_trackback' object.pk %}" rel="trackback">
       {% trans "Trackback URL" %}</a>
