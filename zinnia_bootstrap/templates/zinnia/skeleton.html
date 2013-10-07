@@ -1,5 +1,4 @@
-{% load i18n %}
-{% load url from future %}
+{% load i18n staticfiles %}
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}">
   <head>
@@ -13,21 +12,21 @@
     {% block meta %}{% endblock %}
     <link rel="pingback" href="/xmlrpc/" />
     <link rel="home" href="{% url 'zinnia_entry_archive_index' %}" />
-    <link href="{{ STATIC_URL }}zinnia_bootstrap/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "zinnia_bootstrap/bootstrap/css/bootstrap.css" %}" />
     <style type="text/css">
       body {
         padding-top: 40px;
       }
     </style>
-    <link href="{{ STATIC_URL }}zinnia_bootstrap/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "zinnia_bootstrap/bootstrap/css/bootstrap-responsive.css" %}" />
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link rel="shortcut icon" href="{{ STATIC_URL }}zinnia/img/favicon.ico" />
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ STATIC_URL }}zinnia_bootstrap/bootstrap/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}zinnia_bootstrap/bootstrap/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}zinnia_bootstrap/bootstrap/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}zinnia_bootstrap/bootstrap/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="{% static "zinnia/img/favicon.ico" %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static "zinnia_bootstrap/bootstrap/ico/apple-touch-icon-144-precomposed.png" %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static "zinnia_bootstrap/bootstrap/ico/apple-touch-icon-114-precomposed.png" %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static "zinnia_bootstrap/bootstrap/ico/apple-touch-icon-72-precomposed.png" %}" />
+    <link rel="apple-touch-icon-precomposed" href="{% static "zinnia_bootstrap/bootstrap/ico/apple-touch-icon-57-precomposed.png" %}" />
     {% block link %}{% endblock %}
     {% block script %}{% endblock %}
   </head>
@@ -35,7 +34,7 @@
     <header class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <img src="{{ STATIC_URL }}zinnia_bootstrap/img/zinnia.png" class="pull-left" />
+          <img src="{% static "zinnia_bootstrap/img/zinnia.png" %}" class="pull-left" alt="Zinnia's Blog" />
           <a href="{% url 'zinnia_entry_archive_index' %}" title="Zinnia's Blog" class="brand" rel="home">
             Zinnia's Blog
           </a>
@@ -65,8 +64,7 @@
           </form>
           <ul class="nav pull-right">
             {% url 'zinnia_sitemap' as sitemap_url %}
-            <li {% if sitemap in request.path %}class="active"{% endif %}>
-            <li>
+            <li {% if sitemap_url in request.path %}class="active"{% endif %}>
               <a href="{{ sitemap_url }}" title="{% trans "Sitemap" %}" class="sitemap">
                 {% trans "Sitemap" %}
               </a>
