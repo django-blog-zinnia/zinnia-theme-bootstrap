@@ -35,7 +35,7 @@
     <header class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <img src="{{ STATIC_URL }}zinnia_bootstrap/img/zinnia.png" class="pull-left" />
+          <img src="{{ STATIC_URL }}zinnia_bootstrap/img/zinnia.png" class="pull-left" alt="Zinnia's Blog" />
           <a href="{% url 'zinnia_entry_archive_index' %}" title="Zinnia's Blog" class="brand" rel="home">
             Zinnia's Blog
           </a>
@@ -65,8 +65,7 @@
           </form>
           <ul class="nav pull-right">
             {% url 'zinnia_sitemap' as sitemap_url %}
-            <li {% if sitemap in request.path %}class="active"{% endif %}>
-            <li>
+            <li {% if sitemap_url in request.path %}class="active"{% endif %}>
               <a href="{{ sitemap_url }}" title="{% trans "Sitemap" %}" class="sitemap">
                 {% trans "Sitemap" %}
               </a>
