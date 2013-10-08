@@ -61,6 +61,12 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'demo_zinnia_bootstrap.urls'
 
+TEMPLATE_LOADERS = (
+    'app_namespace.Loader',
+    'django.template.loaders.app_directories.Loader'
+)
+
+
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.i18n',
