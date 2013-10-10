@@ -1,28 +1,16 @@
-{% extends "zinnia/skeleton.html" %}
+{% extends "zinnia:zinnia/base.html" %}
 {% load zinnia_tags i18n %}
 
-{% block meta-keywords %}{% get_tags as entry_tags %}{{ entry_tags|join:", "}}{% endblock %}
-
-{% block meta %}
-    <meta name="generator" content="Zinnia {{ ZINNIA_VERSION }}" />
-{% endblock %}
-
-{% block link %}
-    <link rel="index" href="{% url 'zinnia_entry_archive_index' %}" />
-    <link rel="author" type="text/plain" href="{% url 'zinnia_humans' %}" />
-    <link rel="EditURI" type="application/rsd+xml" href="{% url 'zinnia_rsd' %}" />
-    <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="{% url 'zinnia_wlwmanifest' %}" />
-    <link rel="search" type="application/opensearchdescription+xml" title="Zinnia's Blog" href="{% url 'zinnia_opensearch' %}" />
-    <link rel="alternate" type="application/rss+xml" title="{% trans "RSS Feed of latest entries" %}" href="{% url 'zinnia_entry_latest_feed' %}" />
-    <link rel="alternate" type="application/rss+xml" title="{% trans "RSS Feed of latest discussions" %}" href="{% url 'zinnia_discussion_latest_feed' %}" />
-    {% get_archives_entries "zinnia/tags/archives_entries_link.html" %}
-{% endblock %}
-
-{% block breadcrumbs %}
-  {% zinnia_breadcrumbs %}
-{% endblock %}
-
 {% block sidebar %}
+<aside id="widget-welcome" class="widget well">
+  <h3>{% trans "Welcome!" %}</h3>
+  <p>
+    {% trans "This simple theme is the default appearance of Zinnia." %}
+  </p>
+  <p>
+    {% trans "Don't hesitate to override the template <strong>zinnia/base.html</strong> to start <a href='http://docs.django-blog-zinnia.com/en/latest/how-to/customize_look_and_feel.html'>customizing your Weblog</a>." %}
+  </p>
+</aside>
 <aside id="widget-categories" class="widget">
   <h3>{% trans "Categories" %}</h3>
   {% get_categories %}
@@ -71,8 +59,8 @@
       </a>
     </li>
     {% endif %}
-    {% block admin_tools %}
-    {% endblock %}
+    {% block admin-tools %}
+    {% endblock admin-tools %}
     <li>
       <a href="{% url 'admin:logout' %}" title="{% trans "Log out" %}">
         <i class="icon-off"></i>
@@ -82,4 +70,4 @@
   </ul>
 </aside>
 {% endif %}
-{% endblock %}
+{% endblock sidebar %}
