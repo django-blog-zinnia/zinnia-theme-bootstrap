@@ -4,6 +4,7 @@ import os
 gettext = lambda s: s
 
 DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {'default':
              {'ENGINE': 'django.db.backends.sqlite3',
@@ -36,6 +37,7 @@ LANGUAGES = (
     ('hu', gettext('Hungarian')),
     ('cs', gettext('Czech')),
     ('sk', gettext('Slovak')),
+    ('lt', gettext('Lithuanian')),
     ('ru', gettext('Russian')),
     ('pl', gettext('Polish')),
     ('eu', gettext('Basque')),
@@ -59,12 +61,17 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'demo_zinnia_bootstrap.urls'
 
+TEMPLATE_LOADERS = (
+    'app_namespace.Loader',
+    'django.template.loaders.app_directories.Loader'
+)
+
+
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.i18n',
     'django.core.context_processors.request',
     'django.core.context_processors.media',
-    'django.core.context_processors.static',
     'django.contrib.messages.context_processors.messages',
     'zinnia.context_processors.version',
 )

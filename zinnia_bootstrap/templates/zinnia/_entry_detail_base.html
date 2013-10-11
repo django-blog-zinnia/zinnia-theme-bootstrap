@@ -1,17 +1,17 @@
-{% load comments i18n %}
-{% load url from future %}
+{% load comments i18n zinnia_tags %}
 <article id="entry-{{ object.pk }}" class="hentry{% if object.featured %} featured{% endif %}">
   {% block entry-header %}
   <header class="entry-header">
     {% block entry-title %}
     <h2 class="entry-title">
       <a href="{{ object.get_absolute_url }}" title="{{ object.title }}" rel="bookmark">
-        {{ object.title }}
+        {{ object.title|widont }}
       </a>
     </h2>
-    {% endblock %}
+    {% endblock entry-title %}
     {% block entry-info %}
     <p class="entry-info">
+      {% block entry-authors %}
       {% with authors=object.authors.all %}
       {% if authors|length %}
       {% trans "Written by" %}
@@ -25,18 +25,29 @@
       {% trans "Written on" %}
       {% endif %}
       {% endwith %}
-      <time datetime="{{ object.creation_date|date:"c" }}" pubdate="pubdate">{{ object.creation_date|date:"DATE_FORMAT" }}</time>
+      {% endblock entry-authors %}
+      {% block entry-published %}
+      <time class="published" datetime="{{ object.creation_date|date:"c" }}" pubdate="pubdate">{{ object.creation_date|date:"DATE_FORMAT" }}</time>
+      {% endblock entry-published %}
+      {% block entry-categories %}
       {% with categories=object.categories.all %}
       {% if categories|length %}
       {% trans "in" %}
       {% for category in categories %}
       <a href="{{ category.get_absolute_url }}"
          title="{% blocktrans %}Show all entries in {{ category }}{% endblocktrans %}"
-         rel="tag category">{{ category }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}.{% endwith %}
+         rel="tag category">{{ category }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}.
+      {% endwith %}
+      {% endblock entry-categories %}
     </p>
-    {% endblock %}
+    {% endblock entry-info %}
+    {% block entry-last-update %}
+    <p class="entry-last-update" style="display: none;">
+      {% trans "Last update on" %} <time class="updated" datetime="{{ object.last_update|date:"c" }}">{{ object.last_update|date:"DATE_FORMAT" }}</time>.
+    </p>
+    {% endblock entry-last-update %}
   </header>
-  {% endblock %}
+  {% endblock entry-header %}
 
   {% block entry-body %}
   <div class="entry-body">
@@ -54,14 +65,14 @@
       </p>
     </div>
     {% endif %}
-    {% endblock %}
+    {% endblock entry-image %}
     {% block entry-content %}
     <div class="entry-content">
-      {{ object_content }}
+      {{ object_content|safe }}
     </div>
-    {% endblock %}
+    {% endblock entry-content %}
     {% block continue-reading %}
-    {% if continue_reading %}
+    {% if continue_reading and object_content.has_more %}
     <p class="continue-reading">
       <a href="{{ object.get_absolute_url }}"
          title="{% blocktrans with object=object.title %}Continue reading {{ object }}{% endblocktrans %}"
@@ -70,9 +81,9 @@
       </a>
     </p>
     {% endif %}
-    {% endblock %}
+    {% endblock continue-reading %}
   </div>
-  {% endblock %}
+  {% endblock entry-body %}
 
   {% block entry-footer %}
   <footer class="entry-footer well">
@@ -87,7 +98,7 @@
       <span>{% trans "No tags" %}</span>
       {% endfor %}
     </p>
-    {% endblock %}
+    {% endblock entry-tags %}
     {% block entry-shorturl %}
     <p class="entry-shorturl">
       <i class="icon-bookmark"></i> <strong>{% trans "Short url" %}</strong> :
@@ -97,10 +108,11 @@
         {{ object.short_url }}
       </a>
     </p>
-    {% endblock %}
-    {% block entry-comments %}
-    <p class="entry-comments">
+    {% endblock entry-shorturl %}
+    {% block entry-discussions %}
+    <p class="entry-discussions">
       <i class="icon-comment"></i> <strong>{% trans "Discussions" %}</strong> :
+      {% block entry-comments %}
       {% with comment_count=object.comment_count %}
       {% if comment_count %}
       <a href="{{ object.get_absolute_url }}#comments"
@@ -119,6 +131,8 @@
       {% endif %}
       {% endif %}
       {% endwith %}
+      {% endblock entry-comments %}
+      {% block entry-pingbacks %}
       {% with pingback_count=object.pingback_count %}
       {% if pingback_count %}
       , <a href="{{ object.get_absolute_url }}#pingbacks" title="{% blocktrans with object=object.title %}Pingbacks on {{ object }}{% endblocktrans %}">
@@ -126,6 +140,8 @@
       </a>
       {% endif %}
       {% endwith %}
+      {% endblock entry-pingbacks %}
+      {% block entry-trackbacks %}
       {% with trackback_count=object.trackback_count %}
       {% if trackback_count %}
       , <a href="{{ object.get_absolute_url }}#trackbacks" title="{% blocktrans with object=object.title %}Trackbacks on {{ object }}{% endblocktrans %}">
@@ -133,8 +149,9 @@
       </a>
       {% endif %}
       {% endwith %}
+      {% endblock entry-trackbacks %}
     </p>
-    {% endblock %}
+    {% endblock entry-discussions %}
   </footer>
-  {% endblock %}
+  {% endblock entry-footer %}
 </article>
