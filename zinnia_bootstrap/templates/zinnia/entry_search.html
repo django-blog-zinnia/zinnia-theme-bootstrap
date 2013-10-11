@@ -1,16 +1,5 @@
-{% extends "zinnia/entry_list.html" %}
+{% extends "zinnia:zinnia/entry_search.html" %}
 {% load i18n zinnia_tags %}
-
-{% block title %}{% trans "Search results for" %} {% if pattern %}'{{ pattern }}'{% endif %}{% if page_obj %}{% ifnotequal page_obj.number 1 %} | {% trans "Page" %} {{ page_obj.number }}{% endifnotequal %}{% endif %}{% endblock %}
-
-{% block meta-description %}{% trans "Search results for" %} {% if pattern %}'{{ pattern }}'{% endif %}{% if page_obj %}{% ifnotequal page_obj.number 1 %} {% trans "page" %} {{ page_obj.number }}{% endifnotequal %}{% endif %}{% endblock %}
-
-{% block link %}
-  {{ block.super }}
-  <link rel="alternate" type="application/rss+xml" title="{% trans "RSS Feed of search result of" %} '{{ pattern }}'" href="{% url 'zinnia_entry_search_feed' %}?pattern={{ pattern }}" />
-{% endblock %}
-
-{% block body-class %}{{ block.super }} search {% if object_list %}search-results{% else %}search-no-results{% endif %}{% endblock %}
 
 {% block content-title %}
 <h1>{% trans "Search results for" %} '{{ pattern }}'</h1>
@@ -24,28 +13,28 @@
   {% blocktrans count entry_count=paginator.count %}{{ entry_count }} entry found{% plural %}{{ entry_count }} entries found{% endblocktrans %}
 </p>
 {% endif %}
-{% endblock %}
+{% endblock content-title %}
 
 {% block content-loop %}
 {% if not error %}
 {% for object in object_list %}
-  {% include object.content_template with object_content=object.html_content|truncatewords_html:100|safe continue_reading=1 %}
+  {% include object.content_template with object_content=object.html_preview continue_reading=1 %}
 {% empty %}
 <p class="alert alert-info">{% trans "Nothing found." %}</p>
 {% endfor %}
 {% endif %}
-{% endblock %}
+{% endblock content-loop %}
 
 {% block content-related %}
 <div class="search">
   <form method="get" id="main_searchform" action="{% url 'zinnia_entry_search' %}" class="well form-search">
     <p>
       <input type="text" value="{{ pattern }}" name="pattern" id="main_searchbox" class="search-query input-xlarge" />
-      <input type="submit" value="OK" class="btn"/>
-      <a title="{% trans 'You can use - to exclude words or phrases, &quot;double quotes&quot; for exact phrases and the AND/OR boolean operators combined with parenthesis for complex searchs.' %}">
+      <input type="submit" value="OK" class="btn" />
+      <a title="{% trans 'You can use - to exclude words or phrases, &quot;double quotes&quot; for exact phrases and the AND/OR boolean operators combined with parenthesis for complex queries.' %}">
         <i class="icon-info-sign"></i>
       </a>
     </p>
   </form>
 </div>
-{% endblock %}
+{% endblock content-related %}
