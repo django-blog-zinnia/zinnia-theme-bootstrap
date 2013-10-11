@@ -3,19 +3,19 @@
 <html lang="{{ LANGUAGE_CODE }}">
   <head>
     <meta charset="utf-8">
-    <title>Zinnia's Blog - {% block title %}{% endblock %}</title>
+    <title>Zinnia's Weblog - {% block title %}{% endblock title %}{% block title-page %}{% endblock title-page %}</title>
     <meta name="robots" content="follow, all" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="{% block meta-description %}Demonstration of the Zinnia Blog application.{% endblock %}" />
-    <meta name="keywords" content="{% block meta-keywords %}django, blog, zinnia{% endblock %}" />
+    <meta name="description" content="{% block meta-description %}{% trans "Just another Zinnia weblog." %}{% endblock meta-description %}{% block meta-description-page %}{% endblock meta-description-page %}" />
+    <meta name="keywords" content="{% block meta-keywords %}django, blog, weblog, zinnia{% endblock meta-keywords %}" />
     <meta name="author" content="Fantomas42" />
-    {% block meta %}{% endblock %}
+    {% block meta %}{% endblock meta %}
     <link rel="pingback" href="/xmlrpc/" />
     <link rel="home" href="{% url 'zinnia_entry_archive_index' %}" />
     <link rel="stylesheet" href="{% static "zinnia_bootstrap/bootstrap/css/bootstrap.css" %}" />
     <style type="text/css">
       body {
-        padding-top: 40px;
+        padding-top: 70px;
       }
     </style>
     <link rel="stylesheet" href="{% static "zinnia_bootstrap/bootstrap/css/bootstrap-responsive.css" %}" />
@@ -27,16 +27,16 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static "zinnia_bootstrap/bootstrap/ico/apple-touch-icon-114-precomposed.png" %}" />
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static "zinnia_bootstrap/bootstrap/ico/apple-touch-icon-72-precomposed.png" %}" />
     <link rel="apple-touch-icon-precomposed" href="{% static "zinnia_bootstrap/bootstrap/ico/apple-touch-icon-57-precomposed.png" %}" />
-    {% block link %}{% endblock %}
-    {% block script %}{% endblock %}
+    {% block link %}{% endblock link %}
+    {% block script %}{% endblock script %}
   </head>
-  <body class="zinnia {% block body-class %}{% endblock %}">
+  <body class="zinnia {% block body-class %}{% endblock body-class %}">
     <header class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <img src="{% static "zinnia_bootstrap/img/zinnia.png" %}" class="pull-left" alt="Zinnia's Blog" />
-          <a href="{% url 'zinnia_entry_archive_index' %}" title="Zinnia's Blog" class="brand" rel="home">
-            Zinnia's Blog
+          <img src="{% static "zinnia_bootstrap/img/zinnia.png" %}" class="pull-left" alt="Zinnia's Weblog" />
+          <a href="{% url 'zinnia_entry_archive_index' %}" title="Zinnia's Weblog" class="brand" rel="home">
+            Zinnia's Weblog
           </a>
           <ul class="nav pull-left">
             {% url 'zinnia_category_list' as category_list_url %}
@@ -91,8 +91,8 @@
             <h3>{% trans "Useful links" %}</h3>
             <ul>
               <li>
-                <a href="{% url 'zinnia_entry_archive_index' %}" title="{% trans "Blog index" %}">
-                  {% trans "Blog index" %}
+                <a href="{% url 'zinnia_entry_archive_index' %}" title="{% trans "Weblog index" %}">
+                  {% trans "Weblog index" %}
                 </a>
               </li>
               <li>
@@ -106,22 +106,16 @@
             <h3>{% trans "Search" %}</h3>
             {% include "zinnia/tags/search_form.html" %}
           </div>
-          {% endblock %}
+          {% endblock content %}
         </div>
         <div id="sidebar" class="span4">
-          <div id="widget-welcome" class="widget well">
-            <h3>Welcome!</h3>
-            <p>
-              This simple skin is a base theme implementing Twitter's Bootstrap CSS toolkit.
-            </p>
-          </div>
           {% block sidebar %}
-          {% endblock %}
+          {% endblock sidebar %}
         </div>
       </div>
     </div>
     <footer class="container">
-      <p>Powered by <a href="http://www.djangoproject.com">Django</a> and <a href="https://github.com/Fantomas42/django-blog-zinnia">Zinnia {{ ZINNIA_VERSION }}</a>.</p>
+      <p>{% blocktrans %}Powered by <a href="http://www.djangoproject.com">Django</a> and <a href="https://github.com/Fantomas42/django-blog-zinnia">Zinnia {{ ZINNIA_VERSION }}</a>.{% endblocktrans %}</p>
     </footer>
   </body>
 </html>
