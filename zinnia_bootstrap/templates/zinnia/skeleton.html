@@ -12,21 +12,21 @@
     {% block meta %}{% endblock meta %}
     <link rel="pingback" href="/xmlrpc/" />
     <link rel="home" href="{% url 'zinnia_entry_archive_index' %}" />
-    <link rel="stylesheet" href="{% static "zinnia_bootstrap/bootstrap/css/bootstrap.css" %}" />
+    <link rel="stylesheet" href="{% static "zinnia_bootstrap/bootstrap/css/bootstrap.min.css" %}" />
     <style type="text/css">
       body {
         padding-top: 70px;
       }
     </style>
-    <link rel="stylesheet" href="{% static "zinnia_bootstrap/bootstrap/css/bootstrap-responsive.css" %}" />
     <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="{% static "zinnia_bootstrap/assets/js/html5shiv.js" %}"></script>
+        <script src="{% static "zinnia_bootstrap/assets/js/respond.min.js" %}"></script>
     <![endif]-->
     <link rel="shortcut icon" href="{% static "zinnia/img/favicon.ico" %}" />
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static "zinnia_bootstrap/bootstrap/ico/apple-touch-icon-144-precomposed.png" %}" />
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static "zinnia_bootstrap/bootstrap/ico/apple-touch-icon-114-precomposed.png" %}" />
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static "zinnia_bootstrap/bootstrap/ico/apple-touch-icon-72-precomposed.png" %}" />
-    <link rel="apple-touch-icon-precomposed" href="{% static "zinnia_bootstrap/bootstrap/ico/apple-touch-icon-57-precomposed.png" %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static "zinnia_bootstrap/assets/ico/apple-touch-icon-144-precomposed.png" %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static "zinnia_bootstrap/assets/ico/apple-touch-icon-114-precomposed.png" %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static "zinnia_bootstrap/assets/ico/apple-touch-icon-72-precomposed.png" %}" />
+    <link rel="apple-touch-icon-precomposed" href="{% static "zinnia_bootstrap/assets/ico/apple-touch-icon-57-precomposed.png" %}" />
     {% block link %}{% endblock link %}
     {% block script %}{% endblock script %}
   </head>
@@ -117,5 +117,7 @@
     <footer class="container">
       <p>{% blocktrans %}Powered by <a href="http://www.djangoproject.com">Django</a> and <a href="https://github.com/Fantomas42/django-blog-zinnia">Zinnia {{ ZINNIA_VERSION }}</a>.{% endblocktrans %}</p>
     </footer>
+    <script type="text/javascript" src="{% static "zinnia_bootstrap/assets/js/jquery.js" %}"></script>
+    <script type="text/javascript" src="{% static "zinnia_bootstrap/bootstrap/js/bootstrap.min.js" %}"></script>
   </body>
 </html>
