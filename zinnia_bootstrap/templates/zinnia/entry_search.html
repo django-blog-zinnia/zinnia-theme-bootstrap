@@ -1,4 +1,4 @@
-{% extends "zinnia:zinnia/entry_search.html" %}
+*{% extends "zinnia:zinnia/entry_search.html" %}
 {% load i18n zinnia_tags %}
 
 {% block content-title %}
@@ -32,7 +32,7 @@
       <input type="text" value="{{ pattern }}" name="pattern" id="main_searchbox" class="search-query input-xlarge" />
       <input type="submit" value="OK" class="btn" />
       <a title="{% trans 'You can use - to exclude words or phrases, &quot;double quotes&quot; for exact phrases and the AND/OR boolean operators combined with parenthesis for complex queries.' %}">
-        <i class="icon-info-sign"></i>
+        <span class="glyphicon glyphicon-info-sign"></span>
       </a>
     </p>
   </form>
