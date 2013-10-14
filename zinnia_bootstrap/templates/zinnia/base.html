@@ -46,7 +46,7 @@
     {% if perms.zinnia %}
     <li>
       <a href="{% url 'admin:app_list' 'zinnia' %}" title="{% trans "Dashboard" %}">
-        <i class="icon-book"></i>
+        <span class="glyphicon glyphicon-book"></span>
         {% trans "Dashboard" %}
       </a>
     </li>
@@ -54,7 +54,7 @@
     {% if perms.zinnia.add_entry %}
     <li>
       <a href="{% url 'admin:zinnia_entry_add' %}" title="{% trans "Post an entry" %}">
-        <i class="icon-pencil"></i>
+        <span class="glyphicon glyphicon-pencil"></span>
         {% trans "Post an entry" %}
       </a>
     </li>
@@ -63,7 +63,7 @@
     {% endblock admin-tools %}
     <li>
       <a href="{% url 'admin:logout' %}" title="{% trans "Log out" %}">
-        <i class="icon-off"></i>
+        <span class="glyphicon glyphicon-off"></span>
         {% trans "Log out" %}
       </a>
     </li>

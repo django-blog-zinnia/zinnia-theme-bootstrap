@@ -58,7 +58,7 @@
         {% if continue_reading %}
         <a href="{{ object.get_absolute_url }}" title="{{ object.title }}" rel="bookmark">
           {% endif %}
-          <img src="{{ object.image.url }}" alt="{{ object.title }}" class="thumbnail pull-left" style="margin-right: 15px;" />
+          <img src="{{ object.image.url }}" alt="{{ object.title }}" class="img-thumbnail img-responsive" />
           {% if continue_reading %}
         </a>
         {% endif %}
@@ -89,7 +89,7 @@
   <footer class="entry-footer well">
     {% block entry-tags %}
     <p class="entry-tags">
-      <i class="icon-tags"></i> <strong>{% trans "Tags" %}</strong> :
+      <span class="glyphicon glyphicon-tags"></span> <strong>{% trans "Tags" %}</strong> :
       {% for tag in object.tags_list %}
       <a href="{% url 'zinnia_tag_detail' tag %}"
          title="{% blocktrans %}Show all entries tagged by {{ tag }}{% endblocktrans %}"
@@ -101,7 +101,7 @@
     {% endblock entry-tags %}
     {% block entry-shorturl %}
     <p class="entry-shorturl">
-      <i class="icon-bookmark"></i> <strong>{% trans "Short url" %}</strong> :
+      <span class="glyphicon glyphicon-bookmark"></span> <strong>{% trans "Short url" %}</strong> :
       <a href="{{ object.short_url }}"
          title="{% blocktrans with object=object.title %}Short URL to {{ object }}{% endblocktrans %}"
          rel="shortlink">
@@ -111,7 +111,7 @@
     {% endblock entry-shorturl %}
     {% block entry-discussions %}
     <p class="entry-discussions">
-      <i class="icon-comment"></i> <strong>{% trans "Discussions" %}</strong> :
+      <span class="glyphicon glyphicon-comment"></span> <strong>{% trans "Discussions" %}</strong> :
       {% block entry-comments %}
       {% with comment_count=object.comment_count %}
       {% if comment_count %}
