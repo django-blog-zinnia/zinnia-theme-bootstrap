@@ -1,4 +1,4 @@
-*{% extends "zinnia:zinnia/entry_search.html" %}
+{% extends "zinnia:zinnia/entry_search.html" %}
 {% load i18n zinnia_tags %}
 
 {% block content-title %}
@@ -24,17 +24,3 @@
 {% endfor %}
 {% endif %}
 {% endblock content-loop %}
-
-{% block content-related %}
-<div class="search">
-  <form method="get" id="main_searchform" action="{% url 'zinnia_entry_search' %}" class="well form-search">
-    <p>
-      <input type="text" value="{{ pattern }}" name="pattern" id="main_searchbox" class="search-query input-xlarge" />
-      <input type="submit" value="OK" class="btn" />
-      <a title="{% trans 'You can use - to exclude words or phrases, &quot;double quotes&quot; for exact phrases and the AND/OR boolean operators combined with parenthesis for complex queries.' %}">
-        <span class="glyphicon glyphicon-info-sign"></span>
-      </a>
-    </p>
-  </form>
-</div>
-{% endblock content-related %}
