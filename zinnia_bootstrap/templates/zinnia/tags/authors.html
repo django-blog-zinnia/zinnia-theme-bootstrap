@@ -1,5 +1,5 @@
 {% load i18n %}
-<ul class="nav nav-tabs nav-stacked">
+<ul class="nav nav-stacked">
   {% for author in authors %}
   <li class="vcard{% if author.username == context_author.username %} current{% endif %}>">
     <a href="{{ author.get_absolute_url }}"
