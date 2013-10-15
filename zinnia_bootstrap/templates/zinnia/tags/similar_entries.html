@@ -1,0 +1,12 @@
+{% load i18n %}
+<ul class="list-group">
+  {% for entry in entries %}
+  <li class="list-group-item">
+    <a href="{{ entry.get_absolute_url }}" title="{{ entry.title }}" rel="bookmark">{{ entry.title }}</a>
+  </li>
+  {% empty %}
+  <li>
+    {% trans "No similar entries." %}
+  </li>
+  {% endfor %}
+</ul>
