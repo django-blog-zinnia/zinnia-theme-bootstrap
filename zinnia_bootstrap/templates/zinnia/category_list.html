@@ -1,0 +1,28 @@
+{% extends "zinnia:zinnia/category_list.html" %}
+{% load i18n mptt_tags %}
+
+{% block content %}
+<h2>{% trans "Category list" %}</h2>
+
+<ul class="category-root list-group">
+  {% recursetree object_list %}
+  <li class="list-group-item">
+    <a href="{{ node.get_absolute_url }}" title="{% blocktrans with category=node %}Show all entries in {{ category }}{% endblocktrans %}">{{ node }}</a>
+    <span class="badge">
+      {% blocktrans count entry_count=node.entries_published.count %}{{ entry_count }} entry{% plural %}{{ entry_count }} entries{% endblocktrans %}
+    </span>
+    {% if node.description %}<p>{{ node.description|striptags|safe }}</p>{% endif %}
+    {% if not node.is_leaf_node %}
+    <ul class="category-children category-{{ node.slug }}">
+      {{ children }}
+    </ul>
+    {% endif %}
+  </li>
+  {% endrecursetree %}
+  {% if not object_list %}
+  <li class="list-group-item">
+    {% trans "No categories yet." %}
+  </li>
+  {% endif %}
+</ul>
+{% endblock content %}

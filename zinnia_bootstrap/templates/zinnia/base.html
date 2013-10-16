@@ -42,7 +42,7 @@
 {% if user.is_authenticated %}
 <aside id="widget-tools" class="widget">
   <h3>{% trans "Tools" %}</h3>
-  <ul class="nav nav-tabs nav-stacked">
+  <ul class="nav nav-stacked">
     {% if perms.zinnia %}
     <li>
       <a href="{% url 'admin:app_list' 'zinnia' %}" title="{% trans "Dashboard" %}">
