@@ -1,7 +1,7 @@
 {% load i18n %}
-<ul class="nav nav-stacked">
+<ul class="list-group">
   {% for author in authors %}
-  <li class="vcard{% if author.username == context_author.username %} current{% endif %}>">
+  <li class="vcard list-group-item{% if author.username == context_author.username %} current{% endif %}">
     <a href="{{ author.get_absolute_url }}"
        title="{% blocktrans %}Show all {{ author }}'s entries{% endblocktrans %}"
        class="fn url{% if not author.get_full_name %} nickname{% endif %}">{{ author }}
@@ -11,7 +11,7 @@
     </a>
   </li>
   {% empty %}
-  <li>
+  <li class="list-group-item">
     {% trans "No authors yet." %}
   </li>
   {% endfor %}

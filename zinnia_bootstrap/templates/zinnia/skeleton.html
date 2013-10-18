@@ -17,6 +17,13 @@
       body {
         padding-top: 70px;
       }
+      body > nav img {
+        margin-top: 5px;
+        margin-left: 10px;
+      }
+      p.entry-discussions {
+        margin-bottom: 0px;
+      }
     </style>
     <!--[if lt IE 9]>
         <script src="{% static "zinnia_bootstrap/assets/js/html5shiv.js" %}"></script>
@@ -31,7 +38,7 @@
     {% block script %}{% endblock script %}
   </head>
   <body class="zinnia {% block body-class %}{% endblock body-class %}">
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,6 +47,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+          <img src="{% static "zinnia_bootstrap/img/zinnia.png" %}" class="pull-left" alt="Zinnia's Weblog" />
           <a href="{% url 'zinnia_entry_archive_index' %}" title="Zinnia's Welog" class="navbar-brand" rel="home">
             Zinnia's Weblog
           </a>
@@ -92,13 +100,11 @@
         </div>
       </div>
     </nav>
-    <div class="container">
-      {% block breadcrumbs %}{% endblock %}
-    </div>
     {% block slider %}{% endblock %}
     <div class="container">
       <div class="row">
         <div id="content" class="hfeed col-xs-12 col-sm-8 col-md-8 col-lg-8">
+          {% block breadcrumbs %}{% endblock %}
           {% block content %}
           <div class="links">
             <h3>{% trans "Useful links" %}</h3>
