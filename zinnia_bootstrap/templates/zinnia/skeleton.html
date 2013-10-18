@@ -93,13 +93,11 @@
         </div>
       </div>
     </nav>
-    <div class="container">
-      {% block breadcrumbs %}{% endblock %}
-    </div>
     {% block slider %}{% endblock %}
     <div class="container">
       <div class="row">
         <div id="content" class="hfeed col-xs-12 col-sm-8 col-md-8 col-lg-8">
+          {% block breadcrumbs %}{% endblock %}
           {% block content %}
           <div class="links">
             <h3>{% trans "Useful links" %}</h3>
