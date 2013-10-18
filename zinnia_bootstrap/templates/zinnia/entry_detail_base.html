@@ -171,7 +171,7 @@
 
 {% block admin-tools %}
 {% if perms.zinnia.change_entry %}
-<li>
+<li class="list-group-item">
   <a href="{% url 'admin:zinnia_entry_change' object.pk %}" title="{% trans "Edit the entry" %}">
     <span class="glyphicon glyphicon-edit"></span>
     {% trans "Edit the entry" %}
