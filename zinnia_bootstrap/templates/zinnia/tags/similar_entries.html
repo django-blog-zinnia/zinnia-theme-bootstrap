@@ -5,7 +5,7 @@
     <a href="{{ entry.get_absolute_url }}" title="{{ entry.title }}" rel="bookmark">{{ entry.title }}</a>
   </li>
   {% empty %}
-  <li>
+  <li class="list-group-item">
     {% trans "No similar entries." %}
   </li>
   {% endfor %}

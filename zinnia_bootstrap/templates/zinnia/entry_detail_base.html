@@ -6,8 +6,10 @@
   {% block entry-related-entries %}
   {% with entry_related=object.related_published %}
   {% if entry_related %}
-  <div class="entry-related">
-    <h3>{% trans "Related entries" %}</h3>
+  <div class="entry-related panel panel-default">
+    <div class="panel-heading">
+      {% trans "Related entries" %}
+    </div>
     <ul class="list-group">
       {% for entry in entry_related %}
       <li class="list-group-item">
@@ -20,8 +22,10 @@
   {% endwith %}
   {% endblock entry-related-entries %}
   {% block entry-similar-entries %}
-  <div class="entry-similar">
-    <h3>{% trans "Similar entries" %}</h3>
+  <div class="entry-similar panel panel-default">
+    <div class="panel-heading">
+      {% trans "Similar entries" %}
+    </div>
     {% get_similar_entries %}
   </div>
   {% endblock entry-similar-entries %}
