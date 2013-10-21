@@ -1,5 +1,5 @@
 {% load comments i18n %}
-<form action="{% comment_form_target %}" method="post" id="comment-form" class="well">
+<form action="{% comment_form_target %}" method="post" id="comment-form" class="well form-horizontal">
   <div>{% csrf_token %}</div>
   <fieldset>
     <legend>{% trans "Post your comment" %}</legend>
@@ -8,9 +8,17 @@
     {% if field.is_hidden %}{{ field }}{% else %}
     {% if user.email and field.name in "namemailurl" %}{% else %}
     <div{% if field.errors %} class="alert alert-error"{% endif %}{% ifequal field.name "honeypot" %} style="display:none;"{% endifequal %}>
-      {{ field.label_tag }}
       {% if field.errors %}{{ field.errors }}{% endif %}
-      {{ field }}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}" class="col-lg-2 control-label">{{ field.label }}</label>
+        <div class="col-lg-10">
+          {% if field.id_for_label == "id_comment" %}
+            <textarea id="{{ field.id_for_label }}" class="form-control" rows="10" name="{{ field.html_name }}">{% if field.value %}{{ field.value }}{% endif %}</textarea>
+          {% else %}
+            <input type="text" id="{{ field.id_for_label }}" class="form-control" {% if field.value %}value="{{ field.value }}"{% endif %} name="{{ field.html_name }}" />
+          {% endif %}
+        </div>
+      </div>
     </div>
     {% endif %}
     {% endif %}
@@ -22,7 +30,7 @@
     {% endif %}
     <p class="submit">
       <input type="submit" name="submit" class="submit-post btn btn-primary submit-preview" value="{% trans "Post" %}" />
-      <input type="submit" name="preview" class="submit-preview btn submit-post" value="{% trans "Preview" %}" />
+      <input type="submit" name="preview" class="submit-preview btn btn-default submit-post" value="{% trans "Preview" %}" />
     </p>
   </fieldset>
 </form>
