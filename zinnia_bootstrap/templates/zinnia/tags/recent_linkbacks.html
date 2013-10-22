@@ -1,7 +1,7 @@
 {% load i18n %}
-<ul class="nav nav-tabs nav-stacked">
+<ul class="list-group">
   {% for linkback in linkbacks %}
-  <li>
+  <li class="list-group-item">
     {% with entry=linkback.content_object %}
     <a href="{{ entry.get_absolute_url }}#c{{ linkback.pk }}"
        title="{% trans "Linkback on" %} {{ entry.title }}">
@@ -10,7 +10,7 @@
     {% endwith %}
   </li>
   {% empty %}
-  <li>
+  <li class="list-group-item">
     <a href="#">{% trans "No linkbacks yet." %}</a>
   </li>
   {% endfor %}

@@ -6,11 +6,13 @@
   {% block entry-related-entries %}
   {% with entry_related=object.related_published %}
   {% if entry_related %}
-  <div class="entry-related well">
-    <h3>{% trans "Related entries" %}</h3>
-    <ul>
+  <div class="entry-related panel panel-default">
+    <div class="panel-heading">
+      {% trans "Related entries" %}
+    </div>
+    <ul class="list-group">
       {% for entry in entry_related %}
-      <li>
+      <li class="list-group-item">
 	<a href="{{ entry.get_absolute_url }}" title="{{ entry.title }}" rel="bookmark">{{ entry.title }}</a>
       </li>
       {% endfor %}
@@ -20,8 +22,10 @@
   {% endwith %}
   {% endblock entry-related-entries %}
   {% block entry-similar-entries %}
-  <div class="entry-similar well">
-    <h3>{% trans "Similar entries" %}</h3>
+  <div class="entry-similar panel panel-default">
+    <div class="panel-heading">
+      {% trans "Similar entries" %}
+    </div>
     {% get_similar_entries %}
   </div>
   {% endblock entry-similar-entries %}
@@ -53,17 +57,19 @@
 {% endblock entry-widgets %}
 
 {% block entry-comments %}
-<section id="comments">
-  <h3>{% trans "Comments" %}</h3>
-  {% if object.comment_count %}
+{% if object.comment_count %}
+<section id="comments" class="panel panel-info">
+  <div class="panel-heading">
+    {% trans "Comments" %}
+  </div>
   {% with comment_list=object.comments %}
-  <ol id="comment-list">
+  <ol id="comment-list" class="list-group">
     {% for comment in comment_list %}
     <li id="comment-{{ comment.pk }}-by-{{ comment.user_name|slugify }}"
-        class="comment vcard {% cycle box1,box2 %}{% if comment.user %} authenticated-comment{% if comment.user.is_staff %} staff-comment{% endif %}{% if comment.user.is_superuser %} superuser-comment{% endif %}{% endif %}">
-      <img src="{% get_gravatar comment.email 60 "G" %}"
-           class="gravatar photo" alt="{{ comment.name }}" />
+        class="comment vcard list-group-item {% cycle box1,box2 %}{% if comment.user %} authenticated-comment{% if comment.user.is_staff %} staff-comment{% endif %}{% if comment.user.is_superuser %} superuser-comment{% endif %}{% endif %}">
       <p class="comment-info">
+      <img src="{% get_gravatar comment.email 60 "G" %}"
+           class="gravatar photo img-thumbnail" alt="{{ comment.name }}" />
 	{% if comment.url %}
 	<a href="{{ comment.url }}" rel="external nofollow"
            class="fn url">{{ comment.name }}</a>
@@ -83,27 +89,26 @@
     {% endfor %}
   </ol>
   {% endwith %}
-    {% if not object.comments_are_open %}
-  <p>{% trans "Comments are closed." %}</p>
-    {% endif %}
-  {% else %}
-    {% if object.comments_are_open %}
-  <p>{% trans "No comments yet." %}</p>
-    {% else %}
-  <p>{% trans "Comments are closed." %}</p>
-    {% endif %}
-  {% endif %}
 </section>
+{% else %}
+{% if object.comments_are_open %}
+<p>{% trans "No comments yet." %}</p>
+{% else %}
+<p>{% trans "Comments are closed." %}</p>
+{% endif %}
+{% endif %}
 {% endblock entry-comments %}
 
 {% block entry-pingbacks %}
-<section id="pingbacks">
-  <h3>{% trans "Pingbacks" %}</h3>
-  {% if object.pingback_count %}
+{% if object.pingback_count %}
+<section id="pingbacks" class="panel panel-info">
+  <div class="panel-heading">
+    {% trans "Pingbacks" %}
+  </div>
   {% with pingback_list=object.pingbacks %}
-  <ol id="pingback-list">
+  <ol id="pingback-list" class="list-group">
     {% for pingback in pingback_list %}
-    <li id="pingback-{{ pingback.pk }}" class="pingback vcard {% cycle box1,box2 %}">
+    <li id="pingback-{{ pingback.pk }}" class="pingback vcard list-group-item {% cycle box1,box2 %}">
       <p class="pingback-info">
 	<a href="{{ pingback.url }}" rel="external nofollow"
            class="fn url org">{{ pingback.name }}</a>
@@ -122,24 +127,25 @@
     {% endfor %}
   </ol>
   {% endwith %}
-  {% endif %}
-  {% if object.pingbacks_are_open %}
-  <p>{% trans "Pingbacks are open." %}</p>
-  {% else %}
-  <p>{% trans "Pingbacks are closed." %}</p>
-  {% endif %}
 </section>
+{% endif %}
+{% if object.pingbacks_are_open %}
+<p>{% trans "Pingbacks are open." %}</p>
+{% else %}
+<p>{% trans "Pingbacks are closed." %}</p>
+{% endif %}
 {% endblock entry-pingbacks %}
 
 {% block entry-trackbacks %}
-{% if object.trackback_count or object.trackbacks_are_open %}
-<section id="trackbacks">
-  <h3>{% trans "Trackbacks" %}</h3>
-  {% if object.trackback_count %}
+{% if object.trackback_count %}
+<section id="trackbacks" class="panel panel-info">
+  <div class="panel-heading">
+    {% trans "Trackbacks" %}
+  </div>
   {% with trackback_list=object.trackbacks %}
-  <ol id="trackback-list">
+  <ol id="trackback-list" class="list-group">
     {% for trackback in trackback_list %}
-    <li id="trackback-{{ trackback.pk }}" class="trackback vcard {% cycle box1,box2 %}">
+    <li id="trackback-{{ trackback.pk }}" class="trackback vcard list-group-item {% cycle box1,box2 %}">
       <p class="trackback-info">
 	<a href="{{ trackback.url }}" rel="external nofollow"
            class="fn url org">{{ trackback.name }}</a>
@@ -158,22 +164,21 @@
     {% endfor %}
   </ol>
   {% endwith %}
-  {% endif %}
-  {% if object.trackbacks_are_open %}
-  <p>
-    <a href="{% url 'zinnia_entry_trackback' object.pk %}" rel="trackback">
-      {% trans "Trackback URL" %}</a>
-  </p>
-  {% endif %}
 </section>
+{% endif %}
+{% if object.trackbacks_are_open %}
+<p>
+  <a href="{% url 'zinnia_entry_trackback' object.pk %}" rel="trackback">
+    {% trans "Trackback URL" %}</a>
+</p>
 {% endif %}
 {% endblock entry-trackbacks %}
 
 {% block admin-tools %}
 {% if perms.zinnia.change_entry %}
-<li>
+<li class="list-group-item">
   <a href="{% url 'admin:zinnia_entry_change' object.pk %}" title="{% trans "Edit the entry" %}">
-    <i class="icon-edit"></i>
+    <span class="glyphicon glyphicon-edit"></span>
     {% trans "Edit the entry" %}
   </a>
 </li>

@@ -1,6 +1,6 @@
 {% load i18n %}
-<nav class="pagination pagination-centered">
-  <ul>
+<nav>
+  <ul class="pagination">
     {% if page.has_previous %}
     <li class="page previous">
       <a href="?page={{ page.previous_page_number }}{{ GET_string }}"

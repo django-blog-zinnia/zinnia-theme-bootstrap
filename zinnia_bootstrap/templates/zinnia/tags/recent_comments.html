@@ -1,7 +1,7 @@
 {% load i18n %}
-<ul class="nav nav-tabs nav-stacked">
+<ul class="list-group">
   {% for comment in comments %}
-  <li>
+  <li class="list-group-item">
     {% with entry=comment.content_object %}
     <a href="{{ entry.get_absolute_url }}#comment-{{ comment.pk }}-by-{{ comment.user_name|slugify }}"
        title="{% trans "Comment on" %} {{ entry.title }}">
@@ -11,7 +11,7 @@
     {% endwith %}
   </li>
   {% empty %}
-  <li>
+  <li class="list-group-item">
     <a href="#">{% trans "No comments yet." %}</a>
   </li>
   {% endfor %}

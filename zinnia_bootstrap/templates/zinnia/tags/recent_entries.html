@@ -1,11 +1,11 @@
 {% load i18n %}
-<ul class="nav nav-tabs nav-stacked">
+<ul class="list-group">
   {% for entry in entries %}
-  <li>
+  <li class="list-group-item">
     <a href="{{ entry.get_absolute_url }}" title="{{ entry.title }}" rel="bookmark">{{ entry.title }}</a>
   </li>
   {% empty %}
-  <li>
+  <li class="list-group-item">
     <a href="#">{% trans "No entries yet." %}</a>
   </li>
   {% endfor %}

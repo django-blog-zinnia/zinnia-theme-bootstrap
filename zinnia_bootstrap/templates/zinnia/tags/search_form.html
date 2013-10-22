@@ -1,0 +1,23 @@
+{% load i18n %}
+<form method="get" id="main_searchform" action="{% url 'zinnia_entry_search' %}" class="well form-search form-horizontal">
+  <div class="form-group">
+    <div class="input-group col-xs-12 col-sm-12 col-md-11 col-lg-11" id="search-form">
+      <input type="text" value="{{ pattern }}" name="pattern" id="main_searchbox" class="search-query input-xlarge form-control" />
+      <p class="help-block">
+        {% trans 'You can use - to exclude words or phrases, &quot;double quotes&quot; for exact phrases and the AND/OR boolean operators combined with parenthesis for complex queries.' %}
+      </p>
+    </div>
+
+    <div class="visible-xs visible-sm col-xs-12 col-sm-12 clearfix">
+      <button type="submit" name"submit" class="btn btn-default">
+        {% trans "Search" %}
+      </button>
+    </div>
+
+    <div class="visible-md visible-lg col-md-1 col-lg-1">
+      <button type="submit" name"submit" class="btn btn-default btn-sm">
+        <span class="glyphicon glyphicon-search"></span>
+      </button>
+    </div>
+  </div>
+</form>

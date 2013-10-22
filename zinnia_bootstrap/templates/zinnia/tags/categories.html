@@ -1,7 +1,7 @@
 {% load i18n %}
-<ul class="category-root nav nav-tabs nav-stacked">
+<ul class="category-root list-group">
   {% for category in categories %}
-  <li{% if category.slug == context_category.slug %} class="current"{% endif %}>
+  <li class="list-group-item{% if category.slug == context_category.slug %} current{% endif %}">
     <a href="{{ category.get_absolute_url }}"
        title="{% blocktrans %}Show all entries in {{ category }}{% endblocktrans %}">{{ category }}
       <span class="label label-info">
@@ -10,7 +10,7 @@
     </a>
   </li>
   {% empty %}
-  <li>
+  <li class="list-group-item">
     <a href="#">{% trans "No categories yet." %}</a>
   </li>
   {% endfor %}
