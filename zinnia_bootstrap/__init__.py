@@ -1,5 +1,5 @@
 """zinnia_bootstrap"""
-__version__ = '0.3'
+__version__ = '0.3.1'
 __license__ = 'BSD License'
 
 __author__ = 'Fantomas42'
