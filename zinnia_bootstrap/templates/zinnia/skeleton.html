@@ -11,7 +11,7 @@
     <meta name="author" content="Fantomas42" />
     {% block meta %}{% endblock meta %}
     <link rel="pingback" href="/xmlrpc/" />
-    <link rel="home" href="{% url 'zinnia_entry_archive_index' %}" />
+    <link rel="home" href="{% url 'zinnia:entry_archive_index' %}" />
     <link rel="stylesheet" href="{% static "zinnia_bootstrap/bootstrap/css/bootstrap.min.css" %}" />
     <style type="text/css">
       body {
@@ -48,25 +48,25 @@
             <span class="icon-bar"></span>
           </button>
           <img src="{% static "zinnia_bootstrap/img/zinnia.png" %}" class="pull-left" alt="Zinnia's Weblog" />
-          <a href="{% url 'zinnia_entry_archive_index' %}" title="Zinnia's Welog" class="navbar-brand" rel="home">
+          <a href="{% url 'zinnia:entry_archive_index' %}" title="Zinnia's Welog" class="navbar-brand" rel="home">
             Zinnia's Weblog
           </a>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav navbar-left">
-            {% url 'zinnia_category_list' as category_list_url %}
+            {% url 'zinnia:category_list' as category_list_url %}
             <li {% if category_list_url in request.path %}class="active"{% endif %}>
               <a href="{{ category_list_url }}" title="{% trans "Category list" %}">
                 {% trans "Categories" %}
               </a>
             </li>
-            {% url 'zinnia_author_list' as author_list_url %}
+            {% url 'zinnia:author_list' as author_list_url %}
             <li {% if author_list_url in request.path %}class="active"{% endif %}>
               <a href="{{ author_list_url }}" title="{% trans "Author list" %}">
                 {% trans "Authors" %}
               </a>
             </li>
-            {% url 'zinnia_tag_list' as tag_list_url %}
+            {% url 'zinnia:tag_list' as tag_list_url %}
             <li {% if tag_list_url in request.path %}class="active"{% endif %}>
               <a href="{{ tag_list_url }}" title="{% trans "Tag list" %}">
                 {% trans "Tags" %}
@@ -74,7 +74,7 @@
             </li>
             <li class="divider-vertical"></li>
           </ul>
-          <form method="get" action="{% url 'zinnia_entry_search' %}" class="navbar-form navbar-left">
+          <form method="get" action="{% url 'zinnia:entry_search' %}" class="navbar-form navbar-left">
             <div class="form-group">
               <input type="text" class="search-query form-control" placeholder="{% trans 'Search' %}" name="pattern" value="{{ pattern }}" />
             </div>
@@ -83,7 +83,7 @@
             </button>
           </form>
           <ul class="nav navbar-nav navbar-right">
-            {% url 'zinnia_sitemap' as sitemap_url %}
+            {% url 'zinnia:sitemap' as sitemap_url %}
             <li {% if sitemap in request.path %}class="active"{% endif %}>
             <li>
               <a href="{{ sitemap_url }}" title="{% trans "Sitemap" %}" class="sitemap">
@@ -92,7 +92,7 @@
             </li>
             <li class="divider-vertical"></li>
             <li>
-              <a href="{% url 'zinnia_entry_latest_feed' %}" title="{% trans "RSS Feed of latest entries" %}" class="feeds">
+              <a href="{% url 'zinnia:entry_latest_feed' %}" title="{% trans "RSS Feed of latest entries" %}" class="feeds">
                 {% trans "RSS Feed" %}
               </a>
             </li>
@@ -110,12 +110,12 @@
             <h3>{% trans "Useful links" %}</h3>
             <ul>
               <li>
-                <a href="{% url 'zinnia_entry_archive_index' %}" title="{% trans "Weblog index" %}">
+                <a href="{% url 'zinnia:entry_archive_index' %}" title="{% trans "Weblog index" %}">
                   {% trans "Weblog index" %}
                 </a>
               </li>
               <li>
-                <a href="{% url 'zinnia_sitemap' %}" title="{% trans "Sitemap" %}">
+                <a href="{% url 'zinnia:sitemap' %}" title="{% trans "Sitemap" %}">
                   {% trans "Sitemap" %}
                 </a>
               </li>

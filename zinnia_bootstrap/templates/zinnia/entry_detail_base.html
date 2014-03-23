@@ -168,7 +168,7 @@
 {% endif %}
 {% if object.trackbacks_are_open %}
 <p>
-  <a href="{% url 'zinnia_entry_trackback' object.pk %}" rel="trackback">
+  <a href="{% url 'zinnia:entry_trackback' object.pk %}" rel="trackback">
     {% trans "Trackback URL" %}</a>
 </p>
 {% endif %}
