@@ -1,9 +1,15 @@
 {% load comments i18n %}
+{% load firstof from future %}
 <form action="{% comment_form_target %}" method="post" id="comment-form" class="well form-horizontal">
   <div>{% csrf_token %}</div>
+  {% if form.non_field_errors %}
+  <div class="alert alert-error">
+    {{ form.non_field_errors }}
+  </div>
+  {% endif %}
   <fieldset>
     <legend>{% trans "Post your comment" %}</legend>
-    <input type="hidden" name="next" value="{% url 'zinnia_comment_success' %}"/>
+    <input type="hidden" name="next" value="{% url 'zinnia:comment_success' %}"/>
     {% for field in form %}
     {% if field.is_hidden %}{{ field }}{% else %}
     {% if user.email and field.name in "namemailurl" %}{% else %}
@@ -25,7 +31,7 @@
     {% endfor %}
     {% if user.is_authenticated %}
     <p class="auth">
-      {% trans "Comment as" %} <strong>{% firstof user.get_full_name user.username %}</strong>. <a href="{% url 'admin:logout' %}">{% trans "Log out" %}</a>.
+      {% trans "Comment as" %} <strong>{% firstof user.get_full_name user.get_username %}</strong>. <a href="{% url 'admin:logout' %}">{% trans "Log out" %}</a>.
     </p>
     {% endif %}
     <p class="submit">
