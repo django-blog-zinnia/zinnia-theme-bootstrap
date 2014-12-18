@@ -1,11 +1,11 @@
-{% load comments i18n %}
+{% load comments i18n zinnia %}
 <article id="entry-{{ object.pk }}" class="hentry{% if object.featured %} featured{% endif %}">
   {% block entry-header %}
   <header class="entry-header page-header">
-    {% block entry-title %}
     <h2 class="entry-title">
+    {% block entry-title %}
       <a href="{{ object.get_absolute_url }}" title="{{ object.title }}" rel="bookmark">
-        {{ object.title }}
+        {{ object.title|widont }}
       </a>
     {% endblock entry-title %}
     {% block entry-info %}
@@ -20,7 +20,7 @@
           <a href="{{ author.get_absolute_url }}" class="fn url{% if not author.get_full_name %} nickname{% endif %}" rel="author"
              title="{% blocktrans %}Show all {{ author }}'s entries{% endblocktrans %}">{{ author }}</a></span>{% if not forloop.last %}, {% endif %}
         {% endfor %}
-        {% trans "on" %}
+        {% trans "on" context "on date" %}
         {% else %}
         {% trans "Written on" %}
         {% endif %}
@@ -40,8 +40,8 @@
         {% endwith %}
         {% endblock entry-categories %}
       </small>
-    </h2>
     {% endblock entry-info %}
+    </h2>
     {% block entry-last-update %}
     <p class="entry-last-update" style="display: none;">
       {% trans "Last update on" %} <time class="updated" datetime="{{ object.last_update|date:"c" }}">{{ object.last_update|date:"DATE_FORMAT" }}</time>.
@@ -76,7 +76,7 @@
     {% if continue_reading and object_content.has_more %}
     <p class="continue-reading">
       <a href="{{ object.get_absolute_url }}"
-         title="{% blocktrans with object=object.title %}Continue reading {{ object }}{% endblocktrans %}"
+         title="{% blocktrans with object=object.title percent=object_content.remaining_percent|floatformat:0 %}{{ percent }}% of {{ object }} still remains to read.{% endblocktrans %}"
          rel="bookmark" class="btn btn-primary">
         {% trans "Continue reading" %}
       </a>
@@ -92,7 +92,7 @@
     <p class="entry-tags">
       <span class="glyphicon glyphicon-tags"></span> <strong>{% trans "Tags" %}</strong> :
       {% for tag in object.tags_list %}
-      <a href="{% url 'zinnia_tag_detail' tag %}"
+      <a href="{% url 'zinnia:tag_detail' tag %}"
          title="{% blocktrans %}Show all entries tagged by {{ tag }}{% endblocktrans %}"
          rel="tag">{{ tag }}</a>
       {% empty %}

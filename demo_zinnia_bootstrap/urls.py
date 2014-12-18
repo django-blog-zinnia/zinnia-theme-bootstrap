@@ -12,15 +12,12 @@ from zinnia.sitemaps import CategorySitemap
 from zinnia.sitemaps import AuthorSitemap
 
 admin.autodiscover()
-handler500 = 'demo_zinnia_bootstrap.views.server_error'
-handler404 = 'django.views.defaults.page_not_found'
-handler403 = 'django.views.defaults.permission_denied'
 
 urlpatterns = patterns(
     '',
     url(r'^$', RedirectView.as_view(url='/blog/')),
-    url(r'^blog/', include('zinnia.urls')),
-    url(r'^comments/', include('django.contrib.comments.urls')),
+    url(r'^blog/', include('zinnia.urls', namespace='zinnia')),
+    url(r'^comments/', include('django_comments.urls')),
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^admin/', include(admin.site.urls)),
 )
@@ -42,9 +39,10 @@ urlpatterns += patterns(
 
 urlpatterns += patterns(
     '',
+    url(r'^400/$', 'django.views.defaults.bad_request'),
     url(r'^403/$', 'django.views.defaults.permission_denied'),
     url(r'^404/$', 'django.views.defaults.page_not_found'),
-    url(r'^500/$', 'demo_zinnia_bootstrap.views.server_error'),
+    url(r'^500/$', 'django.views.defaults.server_error'),
 )
 
 if settings.DEBUG:

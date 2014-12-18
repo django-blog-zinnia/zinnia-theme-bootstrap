@@ -1,5 +1,5 @@
 {% load i18n %}
-<form method="get" id="main_searchform" action="{% url 'zinnia_entry_search' %}" class="well form-search form-horizontal">
+<form method="get" id="main_searchform" action="{% url 'zinnia:entry_search' %}" class="well form-search form-horizontal">
   <div class="form-group">
     <div class="input-group col-xs-12 col-sm-12 col-md-11 col-lg-11" id="search-form">
       <input type="text" value="{{ pattern }}" name="pattern" id="main_searchbox" class="search-query input-xlarge form-control" />
