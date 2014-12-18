@@ -94,3 +94,5 @@ INSTALLED_APPS = (
     'zinnia_bootstrap',
     'zinnia',
 )
+
+SILENCED_SYSTEM_CHECKS = ['1_6.W001']
