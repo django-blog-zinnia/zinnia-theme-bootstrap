@@ -18,14 +18,13 @@ from zinnia.sitemaps import EntrySitemap
 from zinnia.sitemaps import CategorySitemap
 from zinnia.sitemaps import AuthorSitemap
 
-admin.autodiscover()
 
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/blog/', permanent=True)),
     url(r'^blog/', include('zinnia.urls', namespace='zinnia')),
     url(r'^comments/', include('django_comments.urls')),
     url(r'^i18n/', include('django.conf.urls.i18n')),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
 ]
 
 sitemaps = {
