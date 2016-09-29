@@ -4,7 +4,6 @@ import os
 gettext = lambda s: s
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {'default':
              {'ENGINE': 'django.db.backends.sqlite3',
@@ -47,36 +46,46 @@ LANGUAGES = (
     ('ca', gettext('Catalan')),
     ('tr', gettext('Turkish')),
     ('sv', gettext('Swedish')),
+    ('is', gettext('Icelandic')),
     ('hr_HR', gettext('Croatian')),
     ('pt_BR', gettext('Brazilian Portuguese')),
-    ('fi_FI', gettext('Finnish (Finland)')),
-    ('zh_CN', gettext('Simplified Chinese')),
+    ('fa_IR', gettext('Persian')),
+    ('fi_FI', gettext('Finnish')),
+    ('uk_UA', gettext('Ukrainian')),
+    ('zh-hans', gettext('Simplified Chinese')),
 )
 
-MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.admindocs.middleware.XViewMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-)
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
 
 ROOT_URLCONF = 'demo_zinnia_bootstrap.urls'
 
-TEMPLATE_LOADERS = (
-    'app_namespace.Loader',
-    'django.template.loaders.app_directories.Loader'
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.request',
-    'django.contrib.messages.context_processors.messages',
-    'zinnia.context_processors.version',
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'OPTIONS': {
+            'loaders': [
+                'app_namespace.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ],
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.request',
+                'django.contrib.messages.context_processors.messages',
+                'zinnia.context_processors.version',
+            ]
+        }
+    }
+]
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -94,5 +103,3 @@ INSTALLED_APPS = (
     'zinnia_bootstrap',
     'zinnia',
 )
-
-SILENCED_SYSTEM_CHECKS = ['1_6.W001']

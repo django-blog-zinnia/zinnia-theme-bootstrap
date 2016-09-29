@@ -2,10 +2,17 @@
 {% load i18n zinnia %}
 
 {% block content-title %}
-<h1>{% trans "Search results for" %} '{{ pattern }}'</h1>
+<h1>{% blocktrans %}Search results for '{{ pattern }}'{% endblocktrans %}</h1>
 
 {% if error %}
 <p class="alert alert-error">{{ error }}</p>
+{% else %}
+<p class="feed">
+  <span class="glyphicon glyphicon-list-alt"></span>
+  <a href="{% url 'zinnia:entry_search_feed' %}?pattern={{ pattern }}" title="{% blocktrans %}RSS feed of search results for '{{ pattern }}'{% endblocktrans %}">
+    {% blocktrans %}RSS feed of search results for '{{ pattern }}'{% endblocktrans %}
+  </a>
+</p>
 {% endif %}
 
 {% if object_list %}
@@ -13,12 +20,14 @@
   {% blocktrans count entry_count=paginator.count %}{{ entry_count }} entry found{% plural %}{{ entry_count }} entries found{% endblocktrans %}
 </p>
 {% endif %}
+
 {% endblock content-title %}
 
 {% block content-loop %}
 {% if not error %}
 {% for object in object_list %}
-  {% include object.content_template with object_content=object.html_preview continue_reading=1 %}
+  {% zinnia_loop_template object.content_template as template %}
+  {% include template with object_content=object.html_preview continue_reading=1 %}
 {% empty %}
 <p class="alert alert-info">{% trans "Nothing found." %}</p>
 {% endfor %}
