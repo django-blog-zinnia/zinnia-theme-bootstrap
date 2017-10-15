@@ -1,7 +1,7 @@
 """Settings for the zinnia-theme-bootstrap demo"""
 import os
 
-gettext = lambda s: s
+gettext = lambda s: s  # noqa
 
 DEBUG = True
 
